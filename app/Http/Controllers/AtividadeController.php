@@ -23,6 +23,9 @@ class AtividadeController extends Controller
     //FORMATAÇÃO DAS VIEWS COM LAYOUT PASTA /resources/views/atividade-bootstrap
     private $pastaViews = "atividade-bootstrap";
     
+    /**
+     * MÉTODO PARA LISTAR TODAS ATIVIDADES
+     */
     public function index()
     {
         $listaAtividades = Atividade::all();
@@ -31,6 +34,9 @@ class AtividadeController extends Controller
                                         "listaAtividades" => $listaAtividades ]);
     }
 
+    /**
+     * MÉTODO PARA EXIBIR UM FORMULÁRIO PARA O USUÁRIO
+     */
     public function create()
     {
         //retornar uma viw chamada create
@@ -38,6 +44,9 @@ class AtividadeController extends Controller
         
     }
 
+    /**
+     * MÉTODO QUE RECEBE OS DADOS DO FORMULÁRIO, VALIDA E SALVA
+     */
     public function store(Request $request)
     {
         //vetor com as mensagens de erro
@@ -76,18 +85,27 @@ class AtividadeController extends Controller
         return redirect('/atividades')->with('success', 'Atividade criada com sucesso!!');
     }
     
+    /**
+     * MÉTODO PARA EXIBIR OS DETALHES DE UM ELEMENTO POR ID
+     */
     public function show($id)
     {
        $umaAtividade = Atividade::find($id);
        return view("$this->pastaViews.show",["atividade" => $umaAtividade]);
     }
 
+    /**
+     * MÉTODO  PARA MONTAR UM FORMULÁRIO PARA EDIÇÃO DE DADOS DE EUM ELEMENTO POR ID
+     */
     public function edit($id)
     {
         $umaAtividade = Atividade::find($id);
         return view("$this->pastaViews.edit", ['atividade' => $umaAtividade]);
     }
 
+    /**
+     * MÉTODO QUE RECEBE OS DADOS DO FORMULÁRIO E O ID DO ELMENTO QUE IRÁ SER ATUALIZADO
+     */
     public function update(Request $request, $id)
     {
         //vetor com as mensagens de erro
@@ -126,11 +144,18 @@ class AtividadeController extends Controller
         return redirect('/atividades')->with('success', 'Atividade editada com sucesso!!');
     }
 
+    /**
+     * MÉTOO QUE IRÁ DEVOLVER UM FORMULÁRIO PERGUNTANDO SE O USUÁRIO TEM CERTEZA
+     * QUE DESEJA DELETAR O ITEM DE UM DETERMINADO ID
+     */
     public function delete($id){
         $umaAtividade = Atividade::find($id);
         return view("$this->pastaViews.delete",['atividade' => $umaAtividade]);
     }
 
+    /**
+     * MÉTODO QUE RECEBE O ID DO ELEMENTO E REMOVE
+     */
     public function destroy($id)
     {
         $umaAtividade = Atividade::find($id);
