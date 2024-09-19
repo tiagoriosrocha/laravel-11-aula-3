@@ -10,30 +10,34 @@ use Illuminate\Support\Facades\Auth;
 
 class AtividadeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /*
+    * ATENÇÃO
+    * EXISTEM DUAS PASTAS COM CONJUNTOS DE VIEWS DIFERENTES
+    * A PRIMEIRA NÃO TEM LAYOUT E A SEGUNDA TEM LAYOUT COM O BOOTSTRAP
+    * ESCOLHA UMA E DEIXA A OUTRA COMENTADA
+    */
+    
+    //FORMATAÇÃO DAS VIEWS SEM LAYOUT PASTA /resources/views/atividade
+    //private $pastaViews = "atividade";
+    
+    //FORMATAÇÃO DAS VIEWS COM LAYOUT PASTA /resources/views/atividade-bootstrap
+    private $pastaViews = "atividade-bootstrap";
+    
     public function index()
     {
         $listaAtividades = Atividade::all();
-        return view ('atividade.list',["tituloPagina" => "Lista de Atividades",
+        return view ("$this->pastaViews.list",["tituloPagina" => "Lista de Atividades",
                                         "nomeAluno" => "Nome do Aluno",
                                         "listaAtividades" => $listaAtividades ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //retornar uma viw chamada create
-        return view('atividade.create');
+        return view("$this->pastaViews.create");
         
     }
 
-    /**
-     * recebe os dados e salva no bdd
-     */
     public function store(Request $request)
     {
         //vetor com as mensagens de erro
@@ -72,28 +76,18 @@ class AtividadeController extends Controller
         return redirect('/atividades')->with('success', 'Atividade criada com sucesso!!');
     }
     
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
        $umaAtividade = Atividade::find($id);
-       return view('atividade.show',["atividade" => $umaAtividade]);
+       return view("$this->pastaViews.show",["atividade" => $umaAtividade]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $umaAtividade = Atividade::find($id);
-        return view("atividade.edit", ['atividade' => $umaAtividade]);
+        return view("$this->pastaViews.edit", ['atividade' => $umaAtividade]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         //vetor com as mensagens de erro
@@ -134,7 +128,7 @@ class AtividadeController extends Controller
 
     public function delete($id){
         $umaAtividade = Atividade::find($id);
-        return view('atividade.delete',['atividade' => $umaAtividade]);
+        return view("$this->pastaViews.delete",['atividade' => $umaAtividade]);
     }
 
     public function destroy($id)
